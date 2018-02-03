@@ -1,9 +1,16 @@
 <div class="animated fadeIn">
 	<tabset>
 		<tab heading="Code">
-			<textarea codemirror [content]="content">
-					
+			<textarea codemirror [content]="content" (value)="setContent($event)">
+	
 			</textarea>
+			<div *ngIf="script.content.length > 0 && compiles" class="alert alert-success">
+				Script compiles!
+			</div>
+			
+			<div *ngIf="script.content.length > 0 && compileError.length>0" class="alert alert-warning">
+				{{ compileError }}
+			</div>
 
 		</tab>
 		
@@ -15,7 +22,7 @@
 			
 		</tab>
 	</tabset>
-			<button type="button" class="btn btn-primary"><i class="icon-control-play"></i>&nbsp;Run</button>
+			<button [disabled]="script.content.length ==0 || !compiles" (click)="sendTest()" type="button" class="btn btn-primary"><i class="icon-control-play"></i>&nbsp;Run</button>
 
 
 	  

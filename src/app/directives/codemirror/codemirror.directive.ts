@@ -9,6 +9,7 @@ import * as CodeMirror from 'codemirror';
 export class CodeMirrorDirective implements OnInit, OnChanges {
 
   @Input() content: string;
+  @Output() value = new EventEmitter<string>();
   @Input() config: EditorConfiguration = {
     lineNumbers: true,
     mode: 'aql'
@@ -22,7 +23,10 @@ export class CodeMirrorDirective implements OnInit, OnChanges {
     defineAQLMode(CodeMirror);
     this.editorRef = fromTextArea(this.element.nativeElement, this.config);
     this.editorRef.setValue(this.content);
-    this.editorRef.on('change', (cmInstance, event) => this.onChange.emit({editorInstance: cmInstance, changes: event}));
+    this.editorRef.on('change', (cmInstance, event) => {
+      this.onChange.emit({editorInstance: cmInstance, changes: event});
+      this.value.emit(this.getContent());
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

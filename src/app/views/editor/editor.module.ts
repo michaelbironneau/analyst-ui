@@ -6,14 +6,14 @@ import { EditorRoutingModule } from './editor-routing.module';
 import {CodeMirrorDirective} from '../../directives';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { WebsocketService } from '../../websocket.service';
-
-
+import { CommonModule } from '@angular/common';  
 
 @NgModule({
   imports: [
     EditorRoutingModule,
     ChartsModule,
-    TabsModule
+    TabsModule,
+    CommonModule,
   ],
   declarations: [ EditorComponent, CodeMirrorDirective],
   providers: [WebsocketService]
