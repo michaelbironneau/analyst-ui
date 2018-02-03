@@ -11,7 +11,9 @@ export class EditorComponent {
   _content: string = '';
   content: string = '';
   script = {
-    content: ''
+    content: '',
+    logs: '',
+    results: '',
   };
   compiles: boolean = true;
   compileError: string = '';
@@ -20,6 +22,8 @@ export class EditorComponent {
       if (msg.type === 'COMPILE' && msg.data !== undefined){
         this.compiles = msg.data.success;
         this.compileError = msg.data.error||'';
+      } else if (msg.type === 'LOG' && msg.data.entry !== undefined){
+        this.script.logs += msg.data.entry;
       }
     });
     Observable.interval(1000).subscribe(x => {
@@ -36,8 +40,8 @@ export class EditorComponent {
     this.script.content = $event;
   }
   
-  sendTest(){
-    console.log('HERE');
+  run(){
+    this.ws.messages.next({type: "RUN", data: {script: this.script.content}});
   }
      
 }

@@ -19,10 +19,15 @@
 		</tab>
 		
 		<tab heading="Results">
-			
+			{{ script.results }}
+		</tab>
+		
+		<tab heading="Logs">
+			<div [innerHTML]="script.logs">
+			</div>
 		</tab>
 	</tabset>
-			<button [disabled]="script.content.length ==0 || !compiles" (click)="sendTest()" type="button" class="btn btn-primary"><i class="icon-control-play"></i>&nbsp;Run</button>
+			<button [disabled]="script.content.length ==0 || !compiles" (click)="run()" type="button" class="btn btn-primary"><i class="icon-control-play"></i>&nbsp;Run</button>
 
 
 	  
