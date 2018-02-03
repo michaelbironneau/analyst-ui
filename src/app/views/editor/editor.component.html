@@ -27,7 +27,7 @@
 			</div>
 		</tab>
 	</tabset>
-			<button [disabled]="script.content.length ==0 || !compiles" (click)="run()" type="button" class="btn btn-primary"><i class="icon-control-play"></i>&nbsp;Run</button>
+			<button [disabled]="script.running || script.content.length ==0 || !compiles" (click)="run()" type="button" class="btn btn-primary"><i class="icon-control-play"></i>&nbsp;Run</button>
 
 
 	  
