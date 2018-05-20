@@ -5,6 +5,7 @@ import { SchedulerComponent } from './scheduler.component';
 import { TasksComponent } from './tasks.component';
 import { LogsComponent } from './logs.component';
 import { SchedulerRoutingModule } from './scheduler-routing.module';
+import { SchedulerService } from './scheduler.service';
 
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
@@ -20,6 +21,6 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
     ToastModule.forRoot(),
   ],
   declarations: [ SchedulerComponent, TasksComponent, LogsComponent],
-  providers: []
+  providers: [SchedulerService]
 })
 export class SchedulerModule { }

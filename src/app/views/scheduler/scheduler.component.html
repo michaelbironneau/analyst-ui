@@ -1,0 +1,29 @@
+<table class="table">
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">Id</th>
+			<th scope="col">Name</th>
+			<th scope="col">Script</th>
+			<th scope="col">Schedule</th>
+			<th scope="col">Enabled</th>
+			<th scope="col">Next run</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let task of tasks">
+			<td>{{ task.id }}</td>
+			<td>{{ task.name }}</td>
+			<td><a href="#">Edit script...</a></td>
+			<td><a href="#">Edit schedule...</a></td>
+			<td> 
+			<label class="switch switch-default switch-pill switch-primary">
+			  <input type="checkbox" class="switch-input" [checked]="task.enabled">
+			  <span class="switch-label"></span>
+             <span class="switch-handle"></span>
+			</label>
+			</td>
+			<td>{{ task.next_run }}</td>
+		</tr>
+	</tbody>
+	
+</table>
