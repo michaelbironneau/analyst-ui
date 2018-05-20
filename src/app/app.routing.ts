@@ -23,6 +23,9 @@ export const routes: Routes = [
       {
         path: 'editor',
         loadChildren: './views/editor/editor.module#EditorModule'
+      },{
+        path: 'scheduler',
+        loadChildren: './views/scheduler/scheduler.module#SchedulerModule'
       }
     ]
   }

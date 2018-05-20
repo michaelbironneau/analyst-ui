@@ -30,6 +30,8 @@ export class EditorComponent {
         this.compileError = msg.data.error||'';
       } else if (msg.type === 'LOG' && msg.data.entry !== undefined){
         this.script.logs += msg.data.entry;
+      } else if (msg.type === 'RESULT' && msg.data.entry !== undefined) {
+        this.script.results += msg.data.entry;      
       } else if (msg.type === 'RUN' && msg.data !== undefined){
           this.script.running = false;
           if (msg.data.success){
