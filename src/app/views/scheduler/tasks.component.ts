@@ -12,8 +12,16 @@ import { SchedulerService } from './scheduler.service';
 })
 export class TasksComponent {
     private tasks: Task[] = [];
+    private confirmations: {[k: number]: Boolean} = {};
   constructor(private ss: SchedulerService){
    ss.getTasks().subscribe(tasks => {this.tasks = tasks});
+  }
+  
+  deleteTask(id: number){
+    this.ss.deleteTask(id).subscribe(r => {
+      this.confirmations[id] = false;
+      this.ss.getTasks().subscribe(tasks => {this.tasks = tasks});
+    })
   }
 }
 

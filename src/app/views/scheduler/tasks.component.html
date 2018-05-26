@@ -29,7 +29,15 @@
 					</label>
 					</td>
 					<td>{{ (task.next_run !== null) ? (task.next_run | amCalendar ) : "Disabled" }}</td>
-					<td><button type="button" class="btn btn-danger">Delete</button></td>
+					<td>
+						<!--Delete task-->
+						<button (click)="confirmations[task.id]=true" *ngIf="!confirmations[task.id]" type="button" class="btn btn-danger">Delete</button>
+						<div *ngIf="confirmations[task.id]">
+							<span>Confirm:</span>
+							<button (click)="deleteTask(task.id)" type="button" class="btn btn-danger">Yes</button>
+							<button (click)="confirmations[task.id]=false" type="button" class="btn btn-info">Cancel</button>
+						</div>
+					</td>
 				</tr>
 			</tbody>
 			

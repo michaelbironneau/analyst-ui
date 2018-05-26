@@ -45,6 +45,14 @@ export class SchedulerService {
             //.catch(this.handleError);   
   }
   
+  public deleteTask(taskID: Number): Observable<any>{
+    return this.http.delete(`${this.BASE_URL}/tasks/${taskID}`, this.getOptions('DELETE'))
+                .map( (res: Response) => {
+                return Observable.of(null)
+            })
+            //.catch(this.handleError);   
+  }
+  
   public getInvocations(taskId: Number): Observable<Invocation[]> {
     const t = new Date();
     const t1 = new Date(t.getTime() - 1000*30);
