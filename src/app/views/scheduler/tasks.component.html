@@ -1,28 +1,46 @@
-<table class="table">
-	<thead class="thead-dark">
-		<tr>
-			<th scope="col">Id</th>
-			<th scope="col">Name</th>
-			<th scope="col">Script</th>
-			<th scope="col">Schedule</th>
-			<th scope="col">Status</th>
-			<th scope="col">Next run</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let task of tasks">
-			<td>{{ task.id }}</td>
-			<td>{{ task.name }}</td>
-			<td><a href="#">Edit script...</a></td>
-			<td><a href="#">Edit schedule...</a></td>
-			<td> 
-				<label class="switch switch-info">
-					<input type="checkbox" class="switch-input" [checked]="task.enabled">
-					<span class="switch-slider"></span>
-				</label>
-			</td>
-			<td>{{ task.next_run }}</td>
-		</tr>
-	</tbody>
-	
-</table>
+<div class="container">
+	<div class="row">
+		<p>
+			<button class="btn btn-primary" [routerLink]="['..', 'new-task']">Add task</button>
+		</p>
+	</div>
+	<div class="row">
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Name</th>
+					<th scope="col">Script</th>
+					<th scope="col">Schedule</th>
+					<th scope="col">Enabled</th>
+					<th scope="col">Next run</th>
+					<th scope="col">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let task of tasks">
+					<td>{{ task.name }}</td>
+					<td><a href="#">Edit</a></td>
+					<td><a href="#">Edit</a></td>
+					<td> 
+					<label class="switch switch-default switch-pill switch-primary">
+					  <input type="checkbox" class="switch-input" [checked]="task.enabled">
+					  <span class="switch-label"></span>
+		             <span class="switch-handle"></span>
+					</label>
+					</td>
+					<td>{{ (task.next_run !== null) ? (task.next_run | amCalendar ) : "Disabled" }}</td>
+					<td><button type="button" class="btn btn-danger">Delete</button></td>
+				</tr>
+			</tbody>
+			
+		</table>
+		<div *ngIf="tasks.length==0">
+			<div class="alert alert-info" role="alert">
+			  <h4 class="alert-heading">No tasks</h4>
+			  <p>You don't have any tasks yet. You can add one by clicking on the "Add task" button.</p>
+			  <hr>
+			  <p class="mb-0">Tasks are regularly scheduled AQL or shell scripts. Schedules are specified with CRON-like intervals.</p>
+			</div>
+		</div>
+	</div>
+</div>

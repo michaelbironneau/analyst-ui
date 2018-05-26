@@ -11,10 +11,6 @@ import { Task } from './task';
   templateUrl: 'scheduler.component.html'
 })
 export class SchedulerComponent {
- private tasks: Task[] = [];
-  constructor(private ss: SchedulerService){
-   ss.getTasks().subscribe(tasks => {this.tasks = tasks});
-  }
 }
 
   

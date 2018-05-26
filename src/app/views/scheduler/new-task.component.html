@@ -1,0 +1,41 @@
+<div class="card">
+<div class="card-header">
+   <strong>Task</strong>
+   <small>New</small>
+</div>
+<div class="card-body">
+   <div class="form-group">
+      <label for="name">Name</label>
+      <input [(ngModel)]="task.name" type="text" class="form-control" id="company" placeholder="Enter a short but descriptive name">
+   </div>
+   <div class="form-group">
+      <label for="script">Script location</label>
+      <input [(ngModel)]="task.script_uri" type="text" class="form-control" id="vat" placeholder="Location in script repo (TODO)">
+   </div>
+   <div class="form-group">
+      <div class="form-check checkbox">
+         <input [(ngModel)]="task.is_aql" class="form-check-input" type="checkbox" value="" id="check1">
+         <label class="form-check-label" for="check1">
+         Is this an AQL script?
+         </label>
+      </div>
+   </div>
+   <div class="form-group">
+      <div class="form-check checkbox">
+         <input [(ngModel)]="task.coalesce" class="form-check-input" type="checkbox" value="" id="check2">
+         <label class="form-check-label" for="check1">
+           Coalesce executions?
+         </label>
+      </div>
+   </div>
+   <div class="row">
+      <div class="form-group col-sm-8">
+         <label for="schedule">Schedule</label>
+         <input [(ngModel)]="task.schedule" type="text" class="form-control" id="city" placeholder="Enter schedule (CRON: TODO)">
+      </div>
+   </div>
+</div>
+<div class="alert alert-info" role="alert">
+  <p>New tasks are <em>disabled</em> by default. Once created, enable the task from the tasks page.</p>
+</div>
+<button type="button" (click)="create()" class="btn btn-primary">Save</button>

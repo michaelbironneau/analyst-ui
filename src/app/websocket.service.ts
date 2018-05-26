@@ -3,7 +3,7 @@ import { Observable, Subject} from 'rxjs/Rx';
 import * as Rx from 'rxjs/Rx';
 import { Message } from './message.model';
 
-const WS_URL = 'ws://localhost:4040';
+const WS_URL = 'ws://localhost:4040/ws';
 
 @Injectable()
 export class WebsocketService {

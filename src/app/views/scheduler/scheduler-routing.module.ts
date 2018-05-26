@@ -4,6 +4,7 @@ import { Routes,
 
 import { SchedulerComponent } from './scheduler.component';
 import { TasksComponent } from './tasks.component';
+import { NewTaskComponent } from './new-task.component';
 import { LogsComponent } from './logs.component';
 
 const routes: Routes = [
@@ -24,8 +25,14 @@ const routes: Routes = [
       component: LogsComponent,
       data: {
         title: 'Logs'
-      }
-    }]
+      }, 
+    }, {
+        path: 'new-task',
+        component: NewTaskComponent,
+        data: {
+          title: 'New Task'
+        }
+      }]
   }
 ];
 
