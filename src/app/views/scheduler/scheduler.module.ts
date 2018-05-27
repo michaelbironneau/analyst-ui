@@ -9,7 +9,6 @@ import { SchedulerRoutingModule } from './scheduler-routing.module';
 import { SchedulerService } from './scheduler.service';
 import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-
 import { CommonModule } from '@angular/common';  
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { MomentModule } from 'ngx-moment';

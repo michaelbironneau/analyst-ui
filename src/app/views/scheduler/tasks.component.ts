@@ -23,6 +23,18 @@ export class TasksComponent {
       this.ss.getTasks().subscribe(tasks => {this.tasks = tasks});
     })
   }
+  
+  enableDisable(id: number, enabled: Boolean){
+    if (enabled){
+        this.ss.enableTask(id).subscribe(resp => {
+          this.ss.getTasks().subscribe(tasks => {this.tasks = tasks});
+        });
+    } else {
+        this.ss.disableTask(id).subscribe(resp => {
+          this.ss.getTasks().subscribe(tasks => {this.tasks = tasks});
+        })
+    }
+  }
 }
 
   
