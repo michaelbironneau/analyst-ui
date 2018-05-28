@@ -14,16 +14,22 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { MomentModule } from 'ngx-moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ModalModule } from 'ngx-bootstrap/modal';
+//import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+//import {BrowserModule} from '@angular/platform-browser';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
   imports: [
     SchedulerRoutingModule,
     ChartsModule,
+    //BrowserAnimationsModule,
+    //BrowserModule,
     TabsModule,
     CommonModule,
     MomentModule,
     HttpModule,
     FormsModule,
+    PopoverModule.forRoot(),
     ModalModule.forRoot(),
     ToastModule.forRoot(),
   ],

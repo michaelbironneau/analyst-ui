@@ -16,7 +16,9 @@
 					<th scope="col">Schedule</th>
 					<th scope="col">Enabled</th>
 					<th scope="col">Next run</th>
+					<th scope="col">Last run</th>
 					<th scope="col">Delete</th>
+					<th scope="col">Logs</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,13 +35,30 @@
 					</td>
 					<td>{{ (task.next_run !== null) ? (task.next_run | amCalendar ) : "Disabled" }}</td>
 					<td>
+						<span *ngIf="lastInvocation[task.id]!==undefined">
+							<ng-template #lastInvocationTemplate>
+								<p><strong>Scheduled time:</strong> {{ lastInvocation[task.id].scheduled_to_start_at | amCalendar}} </p>
+								<p><strong>Started at:</strong> {{ lastInvocation[task.id].started_at | amCalendar }} </p>
+								<p><strong>Finished at:</strong> {{ lastInvocation[task.id].finished_at | amCalendar }} </p>
+								<p><strong>Error:</strong> {{ lastInvocation[task.id].error_message }} </p>
+							</ng-template>
+							<button type="button" class="btn btn-sm btn-outline-primary" triggers="focus" [popover]="lastInvocationTemplate">
+							{{ lastInvocation[task.id].success? 'OK': 'ERROR'}}
+							</button> 
+						</span>
+						
+					</td>
+					<td>
 						<!--Delete task-->
-						<button (click)="confirmations[task.id]=true" *ngIf="!confirmations[task.id]" type="button" class="btn btn-danger">Delete</button>
+						<button (click)="confirmations[task.id]=true" *ngIf="!confirmations[task.id]" type="button" class="btn btn-sm btn-danger">Delete</button>
 						<div *ngIf="confirmations[task.id]">
 							<span>Confirm:</span>
 							<button (click)="deleteTask(task.id)" type="button" class="btn btn-danger">Yes</button>
 							<button (click)="confirmations[task.id]=false" type="button" class="btn btn-info">Cancel</button>
 						</div>
+					</td>
+					<td>
+						<a href="javascript:void(0)">Logs</a>
 					</td>
 				</tr>
 			</tbody>
@@ -67,6 +86,12 @@
     <div class="form-group col-sm-8">
          <label for="schedule">Schedule</label>
          <input [(ngModel)]="editTask.schedule" type="text" class="form-control" id="city" placeholder="Enter schedule (CRON: TODO)">
+      </div>
+	  <div class="form-check checkbox">
+         <input [(ngModel)]="editTask.coalesce" class="form-check-input" type="checkbox" value="" id="check2">
+         <label class="form-check-label" for="check1">
+           Coalesce executions?
+         </label>
       </div>
 	  <button type="button" class="btn btn-primary" (click)="updateSchedule();scheduleModalRef.hide()">Save</button>
 	  <button type="button" class="btn btn-secondary" (click)="scheduleModalRef.hide()">Cancel</button>

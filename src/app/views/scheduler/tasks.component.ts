@@ -8,7 +8,7 @@ import { Task } from './task';
 import { SchedulerService } from './scheduler.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-
+import { Invocation } from './invocation';
 
 @Component({
   templateUrl: 'tasks.component.html'
@@ -19,6 +19,7 @@ export class TasksComponent {
     private editTask: Task;
     private lastUpdated: Date;
     private tasks: Task[] = [];
+    private lastInvocation: {[k: number]: Invocation}= {};
     private confirmations: {[k: number]: Boolean} = {};
     
   constructor(private ss: SchedulerService, private modalService: BsModalService,
@@ -60,8 +61,15 @@ export class TasksComponent {
   }
   
   update(){
+    this.lastInvocation = {};
     this.ss.getTasks().subscribe(tasks => {
       this.tasks = tasks;
+      tasks.forEach(task => {
+        this.ss.getLastInvocation(task).subscribe(invocation => {
+          this.lastInvocation[task.id.valueOf()] = invocation;
+          console.log(this.lastInvocation);
+        });
+      })
       this.lastUpdated = new Date();
      });
   }

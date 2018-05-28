@@ -45,6 +45,15 @@ export class SchedulerService {
             //.catch(this.handleError);   
   }
   
+  public getLastInvocation(task: Task): Observable<Invocation>{
+     return this.http.get(`${this.BASE_URL}/tasks/${task.id}/last-invocation`, this.getOptions('GET'))
+                .map( (res: Response) => {
+                const body = res.json();
+        				return body;
+            })
+            //.catch(this.handleError);   
+  }
+  
   public deleteTask(taskID: Number): Observable<any>{
     return this.http.delete(`${this.BASE_URL}/tasks/${taskID}`, this.getOptions('DELETE'))
                 .map( (res: Response) => {
@@ -77,22 +86,4 @@ export class SchedulerService {
             //.catch(this.handleError);   
   }
   
-  public getInvocations(taskId: Number): Observable<Invocation[]> {
-    const t = new Date();
-    const t1 = new Date(t.getTime() - 1000*30);
-    const t2 = new Date(t.getTime() + 1000*30);
-     return Observable.of([{
-      id: 1,
-      task_id: taskId,
-      start: t1,
-      finish: t2,
-      success: true,  
-    },{
-      id: 2,
-      task_id: taskId,
-      start: t1,
-      finish: t2,
-      success: false,  
-    }])
-  }
 }
