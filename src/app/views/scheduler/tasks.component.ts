@@ -67,7 +67,6 @@ export class TasksComponent {
       tasks.forEach(task => {
         this.ss.getLastInvocation(task).subscribe(invocation => {
           this.lastInvocation[task.id.valueOf()] = invocation;
-          console.log(this.lastInvocation);
         });
       })
       this.lastUpdated = new Date();

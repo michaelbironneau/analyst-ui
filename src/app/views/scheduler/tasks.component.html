@@ -40,7 +40,7 @@
 								<p><strong>Scheduled time:</strong> {{ lastInvocation[task.id].scheduled_to_start_at | amCalendar}} </p>
 								<p><strong>Started at:</strong> {{ lastInvocation[task.id].started_at | amCalendar }} </p>
 								<p><strong>Finished at:</strong> {{ lastInvocation[task.id].finished_at | amCalendar }} </p>
-								<p><strong>Error:</strong> {{ lastInvocation[task.id].error_message }} </p>
+								<p><strong>Error:</strong><code> {{ lastInvocation[task.id].error_message }}</code> </p>
 							</ng-template>
 							<button type="button" class="btn btn-sm btn-outline-primary" triggers="focus" [popover]="lastInvocationTemplate">
 							{{ lastInvocation[task.id].success? 'OK': 'ERROR'}}
@@ -58,7 +58,7 @@
 						</div>
 					</td>
 					<td>
-						<a href="javascript:void(0)">Logs</a>
+						<a href="javascript:void(0)" [routerLink]="['..', 'logs', task.id]">Logs</a>
 					</td>
 				</tr>
 			</tbody>

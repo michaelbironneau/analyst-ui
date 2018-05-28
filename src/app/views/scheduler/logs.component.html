@@ -1,0 +1,27 @@
+<h4>Invocation log</h4>
+<p>Showing last 50 invocations for 
+	<span *ngIf="taskId==null">All tasks</span>
+	<span *ngIf="taskId!=null">Task <em>{{ tasks[taskId]?tasks[taskId].name:'All' }}</em></span>
+</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+	  <th scope="col">Status</th>
+      <th scope="col">Task</th>
+      <th scope="col">Scheduled</th>
+      <th scope="col">Started</th>
+      <th scope="col">Finished</th>
+	  <th scope="col">Error</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let invocation of invocations">
+		  <td>{{ invocation.success? 'OK':'ERROR'}}</td>
+      <td>{{ task? task.name: tasks[invocation.task_id].name }}</td>
+      <td>{{ invocation.scheduled_to_start_at | amCalendar }}</td>
+      <td>{{ invocation.started_at | amCalendar }}</td>
+      <td>{{ invocation.finished_at | amCalendar }}</td>
+      <td><code>{{invocation.error_message}}</code></td>
+	  </tr>
+  </tbody>
+</table>

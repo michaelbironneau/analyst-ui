@@ -36,6 +36,24 @@ export class SchedulerService {
             //.catch(this.handleError);
   }
   
+  public getInvocations(): Observable<Invocation[]> {
+    return this.http.get(`${this.BASE_URL}/invocations`, this.getOptions('GET'))
+                .map( (res: Response) => {
+                const body = res.json();
+        				return body;
+            })
+            //.catch(this.handleError);
+  }
+  
+   public getInvocationsForTask(taskId: number): Observable<Invocation[]> {
+    return this.http.get(`${this.BASE_URL}/tasks/${taskId}/invocations`, this.getOptions('GET'))
+                .map( (res: Response) => {
+                const body = res.json();
+        				return body;
+            })
+            //.catch(this.handleError);
+  }
+  
   public createTask(task: Task): Observable<Task> {
      return this.http.post(`${this.BASE_URL}/tasks`, task, this.getOptions('POST'))
                 .map( (res: Response) => {

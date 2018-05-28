@@ -27,6 +27,12 @@ const routes: Routes = [
         title: 'Logs'
       }, 
     }, {
+      path: 'logs/:id',
+      component: LogsComponent,
+      data: {
+        title: 'Logs'
+      }, 
+    }, {
         path: 'new-task',
         component: NewTaskComponent,
         data: {
