@@ -9,8 +9,12 @@
       <input [(ngModel)]="task.name" type="text" class="form-control" id="company" placeholder="Enter a short but descriptive name">
    </div>
    <div class="form-group">
-      <label for="script">Script location</label>
-      <input [(ngModel)]="task.script_uri" type="text" class="form-control" id="vat" placeholder="Location in script repo (TODO)">
+      <label for="script">Command</label>
+      <input [(ngModel)]="task.command" type="text" class="form-control" id="vat" placeholder="Command or script location">
+   </div>
+   <div class="form-group">
+      <label for="script">Arguments</label>
+      <input [(ngModel)]="task.args" type="text" class="form-control" id="vat" placeholder="Command-line arguments">
    </div>
    <div class="form-group">
       <div class="form-check checkbox">

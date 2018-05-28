@@ -26,7 +26,8 @@ export class NewTaskComponent {
     coalesce: false,
     is_aql: true,
     enabled: false,
-    script_uri: '',
+    command: '',
+    args: '',
     schedule: '@daily'
   };
 

@@ -2,7 +2,8 @@ export interface Task {
 	id: Number;
 	name: String;
 	schedule: String;
-	script_uri: String;
+	command: String;
+	args?: String;
 	is_aql: Boolean;
 	coalesce: Boolean;
 	enabled: Boolean;

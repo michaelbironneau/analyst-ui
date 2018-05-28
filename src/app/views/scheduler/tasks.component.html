@@ -5,6 +5,9 @@
 		</p>
 	</div>
 	<div class="row">
+		<small>Last updated: {{ (lastUpdated == null)? 'never': (lastUpdated | amCalendar) }}.
+			<a href="javascript:void(0)" (click)="update()">Update</a>			
+		</small>
 		<table class="table">
 			<thead class="thead-dark">
 				<tr>
@@ -17,10 +20,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let task of tasks">
+				<tr *ngFor="let task of tasks; let i = index">
 					<td>{{ task.name }}</td>
-					<td><a href="#">Edit</a></td>
-					<td><a href="#">Edit</a></td>
+					<td><a href="javascript:void(0)" (click)="cloneTaskForEdit(i); openScriptModal(editScript)">Edit</a></td>
+					<td><a href="javascript:void(0)"  (click)="cloneTaskForEdit(i); openScheduleModal(editSchedule)">Edit</a></td>
 					<td> 
 					<label class="switch switch-default switch-pill switch-primary">
 					  <input type="checkbox" class="switch-input" (change)="enableDisable(task.id, task.enabled)" [(ngModel)]="task.enabled">
@@ -52,3 +55,50 @@
 		</div>
 	</div>
 </div>
+<!-- Modals -->
+<ng-template #editSchedule>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit Schedule</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="scheduleModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group col-sm-8">
+         <label for="schedule">Schedule</label>
+         <input [(ngModel)]="editTask.schedule" type="text" class="form-control" id="city" placeholder="Enter schedule (CRON: TODO)">
+      </div>
+	  <button type="button" class="btn btn-primary" (click)="updateSchedule();scheduleModalRef.hide()">Save</button>
+	  <button type="button" class="btn btn-secondary" (click)="scheduleModalRef.hide()">Cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #editScript>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit Script</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="scriptModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+	  	<!--Edit script form-->
+	    <div class="form-group">
+	      <label for="script">Command</label>
+	      <input [(ngModel)]="editTask.command" type="text" class="form-control" id="vat" placeholder="Command or script location">
+	   </div>
+	   <div class="form-group">
+	      <label for="script">Arguments</label>
+	      <input [(ngModel)]="editTask.args" type="text" class="form-control" id="vat" placeholder="Command-line arguments">
+	   </div>
+	   <div class="form-group">
+	      <div class="form-check checkbox">
+	         <input [(ngModel)]="editTask.is_aql" class="form-check-input" type="checkbox" value="" id="check1">
+	         <label class="form-check-label" for="check1">
+	         Is this an AQL script?
+	         </label>
+	      </div>
+	   </div>
+	   <button type="button" class="btn btn-primary" (click)="updateScript();scriptModalRef.hide()">Save</button>
+	   <button type="button" class="btn btn-secondary" (click)="scriptModalRef.hide()">Cancel</button>
+  </div>
+</ng-template>

@@ -61,6 +61,14 @@ export class SchedulerService {
             //.catch(this.handleError);   
   }
   
+  public updateTask(task: Task): Observable<any>{
+    return this.http.put(`${this.BASE_URL}/tasks/${task.id}`, task, this.getOptions('PUT'))
+                .map( (res: Response) => {
+                return Observable.of(null)
+            })
+            //.catch(this.handleError);  
+  }
+  
  public disableTask(taskID: Number): Observable<any>{
      return this.http.put(`${this.BASE_URL}/tasks/${taskID}/disable`, this.getOptions('PUT'))
                 .map( (res: Response) => {

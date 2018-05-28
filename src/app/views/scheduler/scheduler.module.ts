@@ -12,6 +12,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CommonModule } from '@angular/common';  
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { MomentModule } from 'ngx-moment';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
@@ -22,9 +24,10 @@ import { MomentModule } from 'ngx-moment';
     MomentModule,
     HttpModule,
     FormsModule,
+    ModalModule.forRoot(),
     ToastModule.forRoot(),
   ],
   declarations: [ SchedulerComponent, TasksComponent, LogsComponent, NewTaskComponent],
-  providers: [SchedulerService]
+  providers: [SchedulerService, BsModalService]
 })
 export class SchedulerModule { }
