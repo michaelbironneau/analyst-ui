@@ -1,31 +1,85 @@
 <div class="card">
 <div class="card-header">
-   <strong>Task</strong>
-   <small>New</small>
+   <h3>New Task</h3>
 </div>
 <div class="card-body">
-   <div class="form-group">
+  <div class="form-group">
       <label for="name">Name</label>
       <input [(ngModel)]="task.name" type="text" class="form-control" id="company" placeholder="Enter a short but descriptive name">
    </div>
-   <div class="form-group">
-      <label for="script">Command</label>
-      <input [(ngModel)]="task.command" type="text" class="form-control" id="vat" placeholder="Command or script location">
-   </div>
-   <div class="form-group">
-      <label for="script">Arguments</label>
-      <input [(ngModel)]="task.args" type="text" class="form-control" id="vat" placeholder="Command-line arguments">
-   </div>
-   <div class="form-group">
+    <div class="form-group">
       <div class="form-check checkbox">
-         <input [(ngModel)]="task.is_aql" class="form-check-input" type="checkbox" value="" id="check1">
+         <input [value]="true" [(ngModel)]="task.is_aql" class="form-check-input" type="radio" id="check1">
          <label class="form-check-label" for="check1">
-         Is this an AQL script?
+         Run an AQL script
+         </label>
+      </div>
+      <div class="form-check checkbox">
+         <input [value]="false" [(ngModel)]="task.is_aql" class="form-check-input" type="radio" id="check2">
+         <label class="form-check-label" for="check2">
+         Start a subprocess (eg. Python)
          </label>
       </div>
    </div>
+   
+      <div class="card">
+           <div class="card-header"><h4>Task steps</h4></div>
+           <div class="card-body">         
+               <div class="form-group">
+                  <label for="script">{{task.is_aql?'Script path':'Command'}}</label>
+                  <input [(ngModel)]="task.command" type="text" class="form-control" id="vat" placeholder="Command or script location">
+               </div>
+               <div class="form-group" name="newAQLOptionForm">
+                  <div *ngIf="task.is_aql">
+                      <h5>AQL global options</h5>  
+                      <a href="javascript:void(0)" (click)="showAddOption = true">Add option</a>
+                      <div *ngIf="showAddOption">
+                         <form class="form-inline">
+                             <input name="newOptionName" [(ngModel)]="newAQLOption.name" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Name">
+                             <input name="newOptionValue" [(ngModel)]="newAQLOption.value" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName3" placeholder="Value">
+                             <select name="newOptionType" [(ngModel)]="newAQLOption.type" class="form-control mb-2 mr-sm-2" id="sel1">
+                                <option>String</option>
+                                <option>Number</option>
+                             </select>
+                            <button type="button" class="mb-2 btn btn-default" (click)="addOption(); showAddOption = false">Add</button>  
+                         </form>
+                         
+                      </div>
+                      <table class="table">
+                            <thead>
+                                <tr>
+                                  <th>Name</th>
+                                  <th>Value</th>
+                                  <th>Type</th>
+                                  <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let option of aqlOptions; let i = index">
+                                 <td>{{ option.name }}</td>
+                                 <td>{{ option.value }}</td>
+                                 <td>{{ option.type }}</td>
+                                 <td><a href="javascript:void(0)" (click)="deleteOption(i)">Delete</a></td>
+                              </tr>
+                            </tbody>
+                       </table>
+                       <div *ngIf="aqlOptions.length == 0">
+                         <em>No global options specified. Use the "add" button. </em>
+                        </div>
+                  </div>
+                  <div *ngIf="!task.is_aql">
+                        <label for="script">Arguments</label>
+                        <input [(ngModel)]="task.args" type="text" class="form-control" id="vat" placeholder="Command-line arguments">
+                  </div>
+               </div>
+           </div>
+       </div>
+   
+   <div class="card">
+           <div class="card-header"><h4>Schedule</h4></div>
+           <div class="card-body">   
    <div class="form-group">
-      <div class="form-check checkbox">
+      <div class="form-check">
          <input [(ngModel)]="task.coalesce" class="form-check-input" type="checkbox" value="" id="check2">
          <label class="form-check-label" for="check1">
            Coalesce executions?
@@ -38,6 +92,7 @@
          <input [(ngModel)]="task.schedule" type="text" class="form-control" id="city" placeholder="Enter schedule (CRON: TODO)">
       </div>
    </div>
+ </div>
 </div>
 <div class="alert alert-info" role="alert">
   <p>New tasks are <em>disabled</em> by default. Once created, enable the task from the tasks page.</p>

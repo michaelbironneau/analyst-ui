@@ -6,7 +6,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-	  <th scope="col">Status</th>
       <th scope="col">Task</th>
       <th scope="col">Scheduled</th>
       <th scope="col">Started</th>
@@ -15,8 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let invocation of invocations">
-		  <td>{{ invocation.success? 'OK':'ERROR'}}</td>
+    <tr *ngFor="let invocation of invocations" [ngClass]="{'warning': !invocation.success}">
       <td>{{ task? task.name: tasks[invocation.task_id].name }}</td>
       <td>{{ invocation.scheduled_to_start_at | amCalendar }}</td>
       <td>{{ invocation.started_at | amCalendar }}</td>
