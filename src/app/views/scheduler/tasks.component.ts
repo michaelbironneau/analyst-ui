@@ -31,12 +31,14 @@ export class TasksComponent {
   updateScript(){
        this.ss.updateTask(this.editTask).subscribe(resp => {
          this.toastr.success('Script updated', 'OK');
+         this.update();
        });
   }
   
   updateSchedule(){
         this.ss.updateTask(this.editTask).subscribe(resp => {
           this.toastr.success('Schedule updated', 'OK');
+          this.update();
         });
   }
   

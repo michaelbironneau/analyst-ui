@@ -1,25 +1,48 @@
 <h4>Invocation log</h4>
-<p>Showing last 50 invocations for 
-	<span *ngIf="taskId==null">All tasks</span>
-	<span *ngIf="taskId!=null">Task <em>{{ tasks[taskId]?tasks[taskId].name:'All' }}</em></span>
+<p>Last 50 invocations for 
+	<span *ngIf="taskId==null">all tasks</span>
+	<span *ngIf="taskId!=null">task <em>{{ tasks[taskId]?tasks[taskId].name:'All' }}</em></span>
 </p>
+<p><small>Last updated {{ lastUpdate | amTimeAgo}}. <a href="javascript:void(0)" (click)="update()">Update</a></small></p>
 <table class="table table-striped">
   <thead>
     <tr>
+      <th scope="col"></th>
       <th scope="col">Task</th>
       <th scope="col">Scheduled</th>
       <th scope="col">Started</th>
       <th scope="col">Finished</th>
-	  <th scope="col">Error</th>
+	  <th scope="col">StdErr</th>
+    <th scope="col">StdOut</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let invocation of invocations" [ngClass]="{'warning': !invocation.success}">
+      <td>
+        <span *ngIf="invocation.success" class="badge badge-success">&nbsp;</span>
+        <span *ngIf="!invocation.success" class="badge badge-danger">&nbsp;</span>
+      </td>
       <td>{{ task? task.name: tasks[invocation.task_id].name }}</td>
       <td>{{ invocation.scheduled_to_start_at | amCalendar }}</td>
       <td>{{ invocation.started_at | amCalendar }}</td>
       <td>{{ invocation.finished_at | amCalendar }}</td>
-      <td><code>{{invocation.error_message}}</code></td>
+      <td><a href="javascript:void(0)" (click)="invocationLog = invocation.error_message;openLogModal(showLog)">Show</a></td>
+      <td><a href="javascript:void(0)" (click)="invocationLog = invocation.log;openLogModal(showLog)">Show</a></td>
 	  </tr>
   </tbody>
 </table>
+
+<ng-template #showLog>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Full log (stdout)</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="logModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+	  	<!--Edit script form-->
+	    <pre><code>{{ invocationLog}}</code></pre>
+      <p *ngIf="invocationLog.length==0">Full logs are not available. Please configure your task to log to stdout.</p>
+      <button type="button" class="btn btn-default" (click)="logModalRef.hide()">Close</button>
+  </div>
+</ng-template>

@@ -6,4 +6,5 @@ export interface Invocation {
 	scheduled_at: Date;
 	success: Boolean;
 	error_message: String;
+	log?: String;
 }

@@ -5,7 +5,7 @@
 		</p>
 	</div>
 	<div class="row">
-		<small>Last updated: {{ (lastUpdated == null)? 'never': (lastUpdated | amCalendar) }}.
+		<small>Last updated: {{ (lastUpdated == null)? 'never': (lastUpdated | amTimeAgo) }}.
 			<a href="javascript:void(0)" (click)="update()">Update</a>			
 		</small>
 		<table class="table">
@@ -23,7 +23,7 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let task of tasks; let i = index">
-					<td>{{ task.name }}</td>
+					<td>{{ task.name }} <span *ngIf="task.is_aql" class="badge badge-primary">AQL</span></td>
 					<td><a href="javascript:void(0)" (click)="cloneTaskForEdit(i); openScriptModal(editScript)">Edit</a></td>
 					<td><a href="javascript:void(0)"  (click)="cloneTaskForEdit(i); openScheduleModal(editSchedule)">Edit</a></td>
 					<td> 
