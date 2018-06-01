@@ -20,12 +20,12 @@
     <tr *ngFor="let invocation of invocations" [ngClass]="{'warning': !invocation.success}">
       <td>
         <span *ngIf="invocation.success" class="badge badge-success">&nbsp;</span>
-        <span *ngIf="!invocation.success" class="badge badge-danger">&nbsp;</span>
+        <span *ngIf="!invocation.success && invocation.finished_at" class="badge badge-danger">&nbsp;</span>
       </td>
       <td>{{ task? task.name: tasks[invocation.task_id].name }}</td>
       <td>{{ invocation.scheduled_to_start_at | amCalendar }}</td>
       <td>{{ invocation.started_at | amCalendar }}</td>
-      <td>{{ invocation.finished_at | amCalendar }}</td>
+      <td>{{ invocation.finished_at? (invocation.finished_at | amCalendar): 'Running...' }}</td>
       <td><a href="javascript:void(0)" (click)="invocationLog = invocation.error_message;openLogModal(showLog)">Show</a></td>
       <td><a href="javascript:void(0)" (click)="invocationLog = invocation.log;openLogModal(showLog)">Show</a></td>
 	  </tr>
