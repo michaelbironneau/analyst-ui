@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
-
 import { EditorComponent } from './editor.component';
 import { EditorRoutingModule } from './editor-routing.module';
 import {CodeMirrorDirective} from '../../directives';
@@ -12,7 +10,6 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 @NgModule({
   imports: [
     EditorRoutingModule,
-    ChartsModule,
     TabsModule,
     CommonModule,
     ToastModule.forRoot(),

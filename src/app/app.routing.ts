@@ -26,6 +26,9 @@ export const routes: Routes = [
       },{
         path: 'scheduler',
         loadChildren: './views/scheduler/scheduler.module#SchedulerModule'
+      }, {
+        path: 'source-control',
+        loadChildren: './views/source-control/source-control.module#SourceControlModule'
       }
     ]
   }

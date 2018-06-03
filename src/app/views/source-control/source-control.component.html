@@ -1,0 +1,35 @@
+<div *ngIf="repositories.length==0" class="card">
+  <div class="card-header">
+    Source Control
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">No Repositories</h5>
+    <p class="card-text">You don't have any repositories yet! Repositories allow you to update your AQL scripts from an external source control repository via Git. As part of the pull, any AQL tests are run and the local code is not overwritten if there are any failures.</p>
+    <a href="#" class="btn btn-primary">Add repository</a>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+  <div *ngFor="let repo of repositories" class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ repo.name}}</h5>
+        <span class="pull-right">Last commit {{ repo.last_commit_date | amCalendar}}</span>
+        <p class="card-text">Remote URL: {{ repo.remote_url}}</p>
+        <div class="border card-text">
+          <h6>Last commit</h6>
+          <p class="card-text">Hash: {{ repo.latest_commit_hash }}</p>
+          <p class="card-text">Author: {{ repo.latest_commit_author}}</p>
+          <p class="card-text">Date: {{ repo.latest_commit_date | amCalendar }}</p>
+          <p class="card-text">Message: {{ repo.latest_commit_message }}</p>          
+        </div>
+        <a href="#" (click)="updateRepo(repo.id)" class="btn btn-primary">
+          Update (pull from remote)
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
+</div>

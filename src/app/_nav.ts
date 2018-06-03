@@ -4,6 +4,11 @@ export const navigation = [
     url: '/editor',
     icon: 'icon-pencil'
   },
+  {
+    name: 'Repositories',
+    url: '/source-control',
+    icon: 'icon-layers'
+  },
     {
     name: 'Scheduler',
     url: '/scheduler',
