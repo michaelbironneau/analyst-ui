@@ -3,6 +3,7 @@ import { Observable} from 'rxjs/Rx';
 import * as Rx from 'rxjs/Rx';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Repository } from './repository';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class SourceControlService {
@@ -25,7 +26,7 @@ export class SourceControlService {
     });
   }
   
-  getRepositories(): Observable<Repository[]> {
+  public getRepositories(): Observable<Repository[]> {
         return this.http.get(`${this.BASE_URL}/repositories`, this.getOptions('GET'))
                 .map( (res: Response) => {
                 const body = res.json();
@@ -34,7 +35,7 @@ export class SourceControlService {
             //.catch(this.handleError);
   }
   
-  getFiles(repoID: Number): Observable<String[]>{
+  public getFiles(repoID: Number): Observable<String[]>{
          return this.http.get(`${this.BASE_URL}/repositories/${repoID}/files`, this.getOptions('GET'))
                 .map( (res: Response) => {
                 const body = res.json();
@@ -43,8 +44,8 @@ export class SourceControlService {
             //.catch(this.handleError); 
   }
   
-  updateRepo(repoID: Number): Observable<any>{
-            return this.http.post(`${this.BASE_URL}/repositories/${repoID}/update`, null, this.getOptions('POST'))
+  public updateRepo(repoID: Number, password: String): Observable<any>{
+            return this.http.post(`${this.BASE_URL}/repositories/${repoID}/update`, {password: password}, this.getOptions('POST'))
                 .map( (res: Response) => {
                 const body = res.json();
         				return body;
@@ -52,7 +53,7 @@ export class SourceControlService {
             //.catch(this.handleError);  
   }
   
-  createRepo(repository: Repository): Observable<any>{
+  public createRepo(repository: Repository): Observable<any>{
             return this.http.post(`${this.BASE_URL}/repositories`, repository, this.getOptions('POST'))
                 .map( (res: Response) => {
                 const body = res.json();
@@ -61,7 +62,7 @@ export class SourceControlService {
             //.catch(this.handleError);  
   }
   
-  deleteRepo(repoID: Number): Observable<any>{
+  public deleteRepo(repoID: Number): Observable<any>{
             return this.http.delete(`${this.BASE_URL}/repositories`, this.getOptions('DELETE'))
                 .map( (res: Response) => {
                 const body = res.json();

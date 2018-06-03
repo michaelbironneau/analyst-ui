@@ -1,3 +1,4 @@
+<!--Empty - no repositories -->
 <div *ngIf="repositories.length==0" class="card">
   <div class="card-header">
     Source Control
@@ -5,31 +6,63 @@
   <div class="card-body">
     <h5 class="card-title">No Repositories</h5>
     <p class="card-text">You don't have any repositories yet! Repositories allow you to update your AQL scripts from an external source control repository via Git. As part of the pull, any AQL tests are run and the local code is not overwritten if there are any failures.</p>
-    <a href="#" class="btn btn-primary">Add repository</a>
+    <a href="javascript:void(0)" (click)="showAddRepo=true" class="btn btn-primary">Add repository</a>
   </div>
 </div>
+<!--Add repo-->
+<div class="card" *ngIf="showAddRepo">
+  <div class="card-header">New Repository</div>
+  <div class="card-body">
+    <div class="form">
+      <div class="form-row">
+        <div class="form-group mb-2 mr-sm-2 col-md-4">
+          
+              <label for="script">Name:</label>
+              <input [(ngModel)]="newRepo.name" type="text" class="form-control" id="name" placeholder="Friendly name">
+       </div>
+       <div class="form-group mb-2 mr-sm-2 col-md-8">
+              <label for="script">URL:</label>
+              <input [(ngModel)]="newRepo.remote_url" type="text" class="form-control" id="url" placeholder="https://www.github.com/me/my-repo">
+       </div>
+     </div>
+     <div class="form-row">
+       <div class="form-group mb-2 mr-sm-2 col-md-4">
+              <label for="script">User:</label>
+              <input [(ngModel)]="newRepo.auth_user" type="text" class="form-control" id="user" placeholder="user">
+       </div>
+       <div class="form-group mb-2 mr-sm-2 col-md-8">
+              <label for="script">Password <em>(optional, if required to clone. Won't be saved):</em></label>
+              <input [(ngModel)]="newRepo.auth_password" type="password" class="form-control" id="pass" placeholder="">
+       </div>
+      </div>
+    </div>
+    <button (click)="createNewRepo()" type="button" class="btn btn-primary">Create and clone</button>
+      <button (click)="newRepo=null;showAddRepo=false" type="button" class="btn btn-secondary">Cancel</button>
+  </div>
+</div>
+<!--Not empty-->
 <div class="container">
   <div class="row">
   <div *ngFor="let repo of repositories" class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{ repo.name}}</h5>
+        <h5 class="card-title"><i class="icon-layers"></i>&nbsp;{{ repo.name}}</h5>
         <span class="pull-right">Last commit {{ repo.last_commit_date | amCalendar}}</span>
         <p class="card-text">Remote URL: {{ repo.remote_url}}</p>
         <div class="border card-text">
-          <h6>Last commit</h6>
-          <p class="card-text">Hash: {{ repo.latest_commit_hash }}</p>
-          <p class="card-text">Author: {{ repo.latest_commit_author}}</p>
-          <p class="card-text">Date: {{ repo.latest_commit_date | amCalendar }}</p>
-          <p class="card-text">Message: {{ repo.latest_commit_message }}</p>          
+          <h6>Latest commit pulled</h6>
+          <p class="card-text">Hash: {{ repo.last_commit_hash }}</p>
+          <p class="card-text">Author: {{ repo.last_commit_author}}</p>
+          <p class="card-text">Date: {{ repo.last_commit_date | amCalendar }}</p>
+          <p class="card-text">Message: {{ repo.last_commit_message }}</p>          
         </div>
-        <a href="#" (click)="updateRepo(repo.id)" class="btn btn-primary">
+        <br />
+        <button type="button" (click)="updateRepo(repo.id)" class="btn btn-primary">
           Update (pull from remote)
-        </a>
+        </button>
+        <button type="button" (click)="deleteRepo(repo.id)" class="btn btn-danger">Delete local copy</button>
       </div>
     </div>
   </div>
 </div>
-  
-  
 </div>

@@ -22,6 +22,7 @@ export class SchedulerService {
       headers.append('Content-type', 'application/json');
     }
     
+    
     return new RequestOptions({
       headers: headers
     });

@@ -5,7 +5,7 @@ export interface Repository {
 	name: String;
 	remote_url: String;
 	auth_user: String;
-	auth_pass?: String;
+	auth_password?: String;
 	last_commit_hash?: String;
 	last_commit_author?: String;
 	last_commit_message?: String;
