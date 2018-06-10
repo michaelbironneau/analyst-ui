@@ -35,7 +35,7 @@ export class SourceControlService {
             //.catch(this.handleError);
   }
   
-  public getFiles(repoID: Number): Observable<String[]>{
+  public getFiles(repoID: Number): Observable<string[]>{
          return this.http.get(`${this.BASE_URL}/repositories/${repoID}/files`, this.getOptions('GET'))
                 .map( (res: Response) => {
                 const body = res.json();

@@ -1,17 +1,24 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import {Observable} from 'rxjs/Rx';
+import {Subject} from 'rxjs/Rx';
+import {Observable} from "rxjs/Observable";
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ViewContainerRef } from '@angular/core';
 import { Task } from './task';
 import { SchedulerService } from './scheduler.service';
+import { Repository } from '../source-control/repository';
+import { SourceControlService } from '../source-control/source-control.service';
 
 @Component({
   templateUrl: 'new-task.component.html'
 })
 export class NewTaskComponent {
   private showAddOption: Boolean = false;
+  private repository: number;
+  private repositories: Repository[] = [];
+  files: string[];
+  fileMatches: Observable<any>;
   private newAQLOption = {
     name: '',
     value: null,
@@ -38,8 +45,22 @@ export class NewTaskComponent {
   };
   private aqlOptions = [];
 
-  constructor(private ss: SchedulerService, private router: Router){
-   ;
+  constructor(private ss: SchedulerService, private scs: SourceControlService, private router: Router){
+   this.scs.getRepositories().subscribe(repos => {
+     this.repositories = <Repository[]>[{name: 'None'}, ...repos];
+     this.fileMatches = Observable.create((observer: any) => {
+        // Runs on every search
+      observer.next(this.task.command);
+      }).mergeMap((token: string) => this.getStatesAsObservable(token));
+     });
+  }
+  
+  getStatesAsObservable(token: string): Observable<any>{
+     const queryToken = token.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); //https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+     let query = new RegExp(queryToken, 'ig');
+     if (this.files === undefined) return Observable.of([]);
+     const matches = this.files.filter((file: string) => query.test(file));
+     return Observable.of(matches);
   }
  
   deleteOption(i){
@@ -65,6 +86,17 @@ export class NewTaskComponent {
       value: null,
       type: 'String'
     };
+  }
+  
+  repoChanged(event: any){
+      if (this.repository === undefined){
+        this.files = [];
+        return;
+      }
+      this.scs.getFiles(this.repository).subscribe(files => {
+        if (files === undefined) return;
+        this.files = files;
+      });
   }
   
   makeAQLArgs(){
