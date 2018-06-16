@@ -17,6 +17,9 @@ export class NewTaskComponent {
   private showAddOption: Boolean = false;
   private repository: number;
   private repositories: Repository[] = [];
+  private executable: string = '';
+  private executableCustom: string = '';
+  private executables: string[] = ['python', 'node', 'bash'];
   files: string[];
   fileMatches: Observable<any>;
   private newAQLOption = {
@@ -44,7 +47,7 @@ export class NewTaskComponent {
     schedule: '@daily'
   };
   private aqlOptions = [];
-
+  
   constructor(private ss: SchedulerService, private scs: SourceControlService, private router: Router){
    this.scs.getRepositories().subscribe(repos => {
      this.repositories = <Repository[]>[{name: 'None'}, ...repos];
@@ -108,9 +111,24 @@ export class NewTaskComponent {
     return JSON.stringify(args);
   }
   
+  setSubprocessArgs(){
+    const command = this.task.command;
+    if (this.executable == 'Other'){
+      this.task.command = this.executableCustom;
+    } else {
+      this.task.command = this.executable;
+    }
+    if (command.length > 0){
+      this.task.args = command + ' ' + this.task.args;
+    }
+    
+  }
+  
   create(){
     if (this.task.is_aql){
       this.task.args = this.makeAQLArgs();
+    } else {
+      this.setSubprocessArgs();
     }
     this.ss.createTask(this.task).subscribe(resp => {
       this.task = JSON.parse(JSON.stringify(this.blank_task));

@@ -24,7 +24,25 @@
    
       <div class="card">
            <div class="card-header"><h4>Task steps</h4></div>
-           <div class="card-body">       
+           <div class="card-body">
+               <div *ngIf="!task.is_aql" class="form-group">
+                 <label for="repo">Executable</label>
+                 <select class="form-control" [(ngModel)]="executable">
+                   <option *ngFor="let exec of executables" [value]="exec">
+                     {{ exec }}
+                   </option>
+                   <option value='Other'>
+                     Other
+                    </option>
+                 </select>
+               </div> 
+               <div *ngIf="!task.is_aql && executable=='Other'" class="form-group">
+                  <label for="script">Other executable</label>
+                  <input  
+                    [(ngModel)]="executableCustom" 
+                    class="form-control" 
+                    placeholder="Executable to run">
+               </div>
                <div class="form-group">
                  <label for="repo">Repository</label>
                  <select class="form-control" [(ngModel)]="repository" (change)="repoChanged($event)">
@@ -34,13 +52,13 @@
                  </select>
                </div>  
                <div class="form-group">
-                  <label for="script">{{task.is_aql?'Script path':'Command'}}</label>
+                  <label for="script">{{task.is_aql?'Script path':'File'}}</label>
                   <input  
                     [(ngModel)]="task.command" 
                     class="form-control" 
                     [typeaheadAsync]="true"
                     [typeahead]="fileMatches"
-                    placeholder="Command or script location">
+                    placeholder="Script location">
                </div>
                <div class="form-group" name="newAQLOptionForm">
                   <div *ngIf="task.is_aql">

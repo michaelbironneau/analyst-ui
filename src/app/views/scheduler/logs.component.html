@@ -34,7 +34,7 @@
 
 <ng-template #showLog>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Full log (stdout)</h4>
+    <h4 class="modal-title pull-left">Logs</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="logModalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -42,7 +42,7 @@
   <div class="modal-body">
 	  	<!--Edit script form-->
 	    <pre><code>{{ invocationLog}}</code></pre>
-      <p *ngIf="invocationLog.length==0">Full logs are not available. Please configure your task to log to stdout.</p>
+      <p *ngIf="invocationLog.length==0">Logs are not available. Please configure your task to log to stdout.</p>
       <button type="button" class="btn btn-default" (click)="logModalRef.hide()">Close</button>
   </div>
 </ng-template>
